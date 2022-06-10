@@ -11,7 +11,7 @@
  *     HTTP/1.1 404 Not Found
  */
 const healthCheck = (request, response) => {
-  console.debug('health-check OK!');
+  console.debug('health-check OK !');
   response.status(200).send('OK');
 };
 export default (app) => {

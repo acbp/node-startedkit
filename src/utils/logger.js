@@ -1,3 +1,3 @@
 export default () => {
-  console.debug('logger OK!');
+  console.debug('logger OK !');
 };

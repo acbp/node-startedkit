@@ -20,6 +20,7 @@
   "bugs": "https://bitbucket.org/newway-ondemand/nodejs-sample",
   "repository": "git@bitbucket.org:newway-ondemand/nodejs-sample.git",
   "scripts": {
+    "env": "cp .env.example .env",
     "dev": "npm run debug",
     "debug": "nodemon src/index.js --ignore infra --inspect",
     "start": "nodemon src/index.js",
@@ -28,9 +29,10 @@
     "lint": "npm run jest -- --selectProjects=lint",
     "test": "npm run jest -- --selectProjects=test",
     "watch": "npm run jest -- --watch",
-    "doc": "apidoc -c doc/apidoc.json -i src -o doc",
-    "postinstall": "npm run jest && npm run doc",
-    "prepare": "husky install"
+    "doc": "mkdir doc && apidoc -c doc/apidoc.json -i src -o doc",
+    "prestart": "npm run doc",
+    "predev": "npm run jest && npm run doc",
+    "preparedev": "husky install"
   },
   "keywords": [
     "nodejs",
@@ -73,6 +75,7 @@
   },
   "nodemonConfig": {
     "ignore": [
+      ".*/*",
       "test/*",
       "docs/*",
       "infra/*",

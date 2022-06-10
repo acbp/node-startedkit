@@ -1,17 +1,17 @@
 {
     "app": {
-        "port": 80,
-        "env": "production",
-        "host": "http://localhost"
+        "port": ${PORT},
+        "env": "${ENV}",
+        "host": "${HOST}"
     },
     "log": {
         "gelf": {
-            "port": 12201,
-            "level": "error ",
-            "name": "qa-projectName",
-            "host": "graylog.com.br",
-            "enabled": true,
-            "facility": "qa-projectName"
+            "port": ${GELF_PORT},
+            "level": "${GELF_LEVEL}",
+            "name": "${GELF_NAME}",
+            "host": "${GELF_HOST}",
+            "enabled": ${GELF_ENABLED},
+            "facility": "${GELF_FACILITY}"
         },
         "console": {
             "level": "${CONSOLE_LEVEL}"
