@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 import request from 'supertest';
 import { app } from '../src/server.js';
 
@@ -12,8 +11,10 @@ describe('APP testes', () => {
     import('../src/index.js');
     request(app)
       .get('/healthcheck')
-      .then(() => console.debug('ok'))
-      .catch(() => console.error('nok'))
-      .finally(done);
+      .then(({ text }) => {
+        expect(text).toEqual('OK');
+        done();
+      })
+      .catch(done);
   });
 });
