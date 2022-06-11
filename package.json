@@ -29,7 +29,7 @@
     "lint": "npm run jest -- --selectProjects=lint",
     "test": "npm run jest -- --selectProjects=test",
     "watch": "npm run jest -- --watch",
-    "doc": "mkdir doc && apidoc -c doc/apidoc.json -i src -o doc",
+    "doc": "apidoc -i src -o doc",
     "prestart": "npm run doc",
     "preparedev": "husky install"
   },
