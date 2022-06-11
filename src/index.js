@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 // importando dependencias do projeto
-import apm from 'express-status-monitor'; // https://github.com/RafalWilinski/express-status-monitor
-import dotenv from 'dotenv-safe'; // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
-import express from 'express';
+const apm = require('express-status-monitor'); // https://github.com/RafalWilinski/express-status-monitor
+const dotenv = require('dotenv-safe'); // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
+const express = require('express');
 
-import server, { app } from './server.js';
+const { server, app } = require('./server.js');
 
 const config = dotenv.config().parsed;
 

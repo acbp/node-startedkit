@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "description": "Servidor em NodeJS usando express, helmet e com integração com graylog",
   "main": "src/index.js",
-  "type": "module",
   "private": true,
   "engines": {
     "eslint": ">= 8.6.0",

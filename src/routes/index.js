@@ -1,6 +1,6 @@
-import healthCheck from './healthcheck/index.js';
+const healthCheck = require('./healthcheck/index.js');
 
-export default (app) => {
+module.exports = (app) => {
   healthCheck(app);
 
   console.debug('routes OK !');

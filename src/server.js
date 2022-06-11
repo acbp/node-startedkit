@@ -1,11 +1,12 @@
-import express from 'express'; // gestão de rotas - https://expressjs.com/en/guide/routing.html
-import cors from 'cors'; // cross origin resource share - https://github.com/expressjs/cors
-import helmet from 'helmet'; // segurança - https://helmetjs.github.io/
-import dotenv from 'dotenv-safe'; // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
-import logger from './utils/logger.js';
-import routes from './routes/index.js';
+const express = require('express'); // gestão de rotas - https://expressjs.com/en/guide/routing.html
+const cors = require('cors'); // cross origin resource share - https://github.com/expressjs/cors
+const helmet = require('helmet'); // segurança - https://helmetjs.github.io/
+const dotenv = require('dotenv-safe'); // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
+const logger = require('./utils/logger.js');
+const routes = require('./routes/index.js');
 
-export const app = express();
+const app = express();
+
 
 /* https://github.com/expressjs/cors#configuration-options */
 const corsOptions = {
@@ -40,4 +41,5 @@ routes(app, config);
 
 const logRunnig = () => console.debug(`Running at ${HOST}:${PORT}`);
 
-export default () => app.listen(PORT, HOST, logRunnig);
+module.exports.app = app;
+module.exports.server = () => app.listen(PORT, HOST, logRunnig);
