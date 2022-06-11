@@ -30,7 +30,9 @@
     "test": "npm run jest -- --selectProjects=test",
     "watch": "npm run jest -- --watch",
     "doc": "apidoc -i src -o doc",
+    "predev": "npm run doc",
     "prestart": "npm run doc",
+    "preparedebug": "husky install",
     "preparedev": "husky install"
   },
   "keywords": [
