@@ -13,7 +13,7 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
   optionsSuccessStatus: 200,
-  maxAge: 1 * 24 * 60 * 60 * 1000, // 1 dia
+  maxAge: 30 * 1 * 24 * 60 * 60 * 1000, // 1 dia
 };
 
 const configOptions = {
@@ -23,18 +23,23 @@ const config = dotenv.config(configOptions).required;
 const { PORT } = config;
 const { HOST } = config;
 
-console.debug('loaded config');
+console.debug('config OK !');
 
 logger({ config });
 
 app.use(cors(corsOptions));
+
+console.debug('cors   OK !');
+
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self' 'unsafe-inline' 'unsafe-eval' 'nonce-rAnd0m123'", 'localhost'], // permite acesso aos docs
+      defaultSrc: ["'self' 'unsafe-inline' 'unsafe-eval' 'nonce-rAnd0m123'", 'localhost', 'https://cdnjs.cloudflare.com'], // permite acesso aos docs
     },
   },
 }));
+
+console.debug('helmet OK !');
 
 routes(app, config);
 

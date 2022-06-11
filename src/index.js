@@ -39,6 +39,18 @@ const apmConfig = {
       path: '/healthcheck',
       port: config.PORT,
     },
+    {
+      protocol: 'http',
+      host: config.HOST,
+      path: '/coverage',
+      port: config.PORT,
+    },
+    {
+      protocol: 'http',
+      host: config.HOST,
+      path: '/',
+      port: config.PORT,
+    },
   ],
 };
 
