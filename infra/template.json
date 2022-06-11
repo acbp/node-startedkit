@@ -11,6 +11,7 @@
             "name": "${GELF_NAME}",
             "host": "${GELF_HOST}",
             "enabled": ${GELF_ENABLED},
+            "source": ${GELF_SOURCED},
             "facility": "${GELF_FACILITY}"
         },
         "console": {
