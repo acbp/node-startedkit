@@ -1,6 +1,6 @@
 {
   "name": "nodejs-server-log",
-  "version": "0.0.0",
+  "version": "0.0.7",
   "description": "Servidor em NodeJS usando express, helmet e com integração com graylog",
   "main": "src/index.js",
   "private": true,
