@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "Servidor em NodeJS usando express, helmet e com integração com graylog",
   "main": "src/index.js",
-  "type": "module",
   "private": true,
+  "type": "module",
   "engines": {
     "eslint": ">= 8.6.0",
     "husky": ">=7.0.0",
@@ -31,7 +31,9 @@
     "test": "npm run jest -- --selectProjects=test",
     "watch": "npm run jest -- --watch",
     "doc": "apidoc -i src -o doc",
+    "predev": "npm run doc",
     "prestart": "npm run doc",
+    "preparedebug": "husky install",
     "preparedev": "husky install"
   },
   "keywords": [
