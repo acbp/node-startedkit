@@ -1,0 +1,26 @@
+{
+    "extends": "@tsconfig/node14/tsconfig.json",
+    "compilerOptions":{
+        "rootDir": "./",
+        "outDir": "./dist",
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "strict": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "esModuleInterop": true,
+        "removeComments": true,
+        "target": "esnext",
+        "lib": [ "dom","es2017"],
+        "module": "esnext",
+        "watch": true,
+        "skipLibCheck":true,
+        "esModuleInterop": true
+    },
+    "exclude":["node_modules", "test"],
+    "include": ["src/**/*"]
+}
