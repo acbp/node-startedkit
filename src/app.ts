@@ -3,7 +3,7 @@ import dotenv from "dotenv-safe";
 import Middleware from './middleware';
 import Routes from './routes/index';
 
-const {PORT} = dotenv.config().required
+const { PORT } = dotenv.config().required
 
 export default class App {
     public server: express.Application;
@@ -14,18 +14,18 @@ export default class App {
         Routes(this);
     }
 
-    public middleware( middleware:any ) {
+    public middleware(middleware: any): App {
         this.server.use(middleware)
         return this;
     }
 
-    public route( router:express.Router ) {
+    public route(router: express.Router): App {
         this.server.use(router)
         return this;
     }
 
-    public listen(){
-       this.server.listen(PORT, () => `Running on ${PORT} !`); 
+    public listen(): App {
+        this.server.listen(PORT, () => `Running on ${PORT} !`);
         return this;
     }
 }

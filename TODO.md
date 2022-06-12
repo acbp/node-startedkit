@@ -3,7 +3,6 @@
 Lista de exemplos a serem implementados em outras branchs
 
 - [Usando criptografia]()
-- [Projeto em Typescript]()
 - [Registar usuários online](https://github.com/expressjs/express/blob/master/examples/online/index.js)
 - [Sessão do usuário](https://github.com/expressjs/express/blob/master/examples/session/index.js)
 - [Tratamento de COOKIES](https://github.com/expressjs/express/blob/master/examples/cookies/index.js)
