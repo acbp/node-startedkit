@@ -5,6 +5,6 @@ const page = Router();
 page.get('/', staticPage('doc'));
 page.get('/doc', staticPage('doc'));
 
-console.debug('doc   OK!');
+console.debug('docs         OK!');
 
 export default page;

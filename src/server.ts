@@ -1,5 +1,7 @@
 import express from 'express'; // gestão de rotas - https://expressjs.com/en/guide/routing.html
 import dotenv from "dotenv-safe";
+import Middleware from './middleware';
+import Routes from './routes/index';
 
 const {PORT} = dotenv.config().required
 
@@ -8,17 +10,22 @@ export default class App {
 
     constructor() {
         this.server = express();
+        Middleware(this);
+        Routes(this);
     }
 
     public middleware( middleware:any ) {
         this.server.use(middleware)
+        return this;
     }
 
-    public router( router:express.Router ) {
+    public route( router:express.Router ) {
         this.server.use(router)
+        return this;
     }
 
     public listen(){
        this.server.listen(PORT, () => `Running on ${PORT} !`); 
+        return this;
     }
 }

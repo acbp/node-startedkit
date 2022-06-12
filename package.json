@@ -4,7 +4,6 @@
   "description": "Servidor em NodeJS usando express, helmet e com integração com graylog",
   "main": "src/index.js",
   "private": true,
-  "type": "module",
   "engines": {
     "eslint": ">= 8.6.0",
     "husky": ">=7.0.0",
@@ -22,8 +21,8 @@
   "scripts": {
     "env": "cp .env.example .env",
     "dev": "npm run debug",
-    "debug": "nodemon src/index.js --ignore infra --inspect",
-    "start": "nodemon src/index.js",
+    "debug": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules,dist,doc,coverage src/index.ts",
+    "start": "nodemon dist/index.js",
     "build": "tsc",
     "jest": "jest --config ./jest.config.mjs",
     "coverage": "npm run jest -- --coverage",
@@ -51,7 +50,6 @@
   "dependencies": {
     "apidoc": "^0.50.3",
     "cors": "^2.8.5",
-    "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
     "express-status-monitor": "^1.3.3",
     "helmet": "^4.6.0",
@@ -61,10 +59,6 @@
     "winston-log2gelf": "^2.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
-    "@babel/plugin-transform-regenerator": "^7.17.9",
-    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.7",
     "@tsconfig/node14": "^1.0.2",
     "@types/cors": "^2.8.12",
@@ -73,8 +67,8 @@
     "@types/express-status-monitor": "^1.3.0",
     "@types/helmet": "^4.0.0",
     "@types/node": "^17.0.32",
-    "babel-jest": "^27.4.5",
     "core-js": "^3.22.3",
+    "dotenv-safe": "^8.2.0",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
@@ -84,16 +78,17 @@
     "jest-runner-eslint": "^1.0.0",
     "jest-runner-prettier": "^0.3.7",
     "prettier": "^2.5.1",
-    "regenerator-runtime": "^0.13.9",
     "socket.io": "4.5",
     "supertest": "^6.1.6",
-    "ts-node": "^10.7.0",
+    "ts-node": "^10.8.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.6.4"
   },
   "nodemonConfig": {
     "ignore": [
       ".*/*",
       "test/*",
+      "dist/*",
       "docs/*",
       "infra/*",
       "coverage/*",

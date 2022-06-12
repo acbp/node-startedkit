@@ -8,7 +8,7 @@ import helmet from './helmet';
  * apiName
  * @apiDescription Monitora os recuros do servidor
  */
-export default ( app:any ) => {
+export default ( app: App ) => {
     app.middleware(cors);
     app.middleware(helmet);
 };

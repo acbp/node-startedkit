@@ -2,11 +2,11 @@ import {json}from 'express';
 
 import apm from './apm';
 import doc from './doc';
+import cover from './coverage';
 import health from './healthcheck';
-import coverage from './coverage';
 
-export default ( app: any) => {
-    app.routes(json());
+export default (app:App) => {
+    app.route(json());
 
     /**
      * @apiGroup Services
@@ -15,7 +15,7 @@ export default ( app: any) => {
      * @api {get} /status Monitor
      * @apiDescription Monitora os recuros do servidor
      */
-    app.routes(apm);
+    app.route(apm);
 
     /**
      * @apiGroup Services
@@ -24,7 +24,7 @@ export default ( app: any) => {
      * @api {get} / Documentação da API
      * @apiDescription Exibe documentação da API
      */
-    app.routes(doc);
+    app.route(doc);
 
 
     /**
@@ -34,7 +34,7 @@ export default ( app: any) => {
      * @api {get} /health Validação de saúde do servidor.
      * @apiDescription Exibe se o servidor está rodando
      */
-    app.routes(health);
+    app.route(health);
 
     /**
      * @apiGroup Services
@@ -43,5 +43,5 @@ export default ( app: any) => {
      * @api {get} /coverage Cobertura de código da API
      * @apiDescription Exibe cobertura de código da API
      */
-    app.routes(coverage);
+    app.route(cover);
 };

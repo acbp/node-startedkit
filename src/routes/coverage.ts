@@ -1,9 +1,9 @@
 import { static as staticPage, Router } from 'express';
 
-const route = Router();
+const page = Router();
 
-route.get('/coverage', staticPage('coverage'));
+page.get('/coverage', staticPage('coverage'));
 
-console.debug('coverage OK !');
+console.debug('coverage     OK!');
 
-export default route;
+export default page;

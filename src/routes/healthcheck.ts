@@ -15,8 +15,6 @@ const page = Router();
  *     HTTP/1.1 404 Not Found
  */
 const healthCheck = (request: any, response: any) => {
-  request;
-  console.debug('health-check OK !');
   response.status(200).send('');
 };
 

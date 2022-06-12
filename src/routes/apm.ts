@@ -1,5 +1,11 @@
 import apm from 'express-status-monitor'; // https://github.com/RafalWilinski/express-status-monitor
 
+const factoryHealthCheckPath = path => ({
+    ...path,
+    host: 'localhost',
+    port: 8080,
+});
+
 // Monitor da aplicação
 const apmConfig:any = {
   title: 'Express Status', // Default title
@@ -25,20 +31,20 @@ const apmConfig:any = {
     statusCodes: true,
   },
   healthChecks: [
-    {
+    factoryHealthCheckPath({
       protocol: 'http',
       path: '/healthcheck',
-    },
-    {
+    }),
+    factoryHealthCheckPath({
       protocol: 'http',
       path: '/coverage',
-    },
-    {
+    }),
+    factoryHealthCheckPath({
       protocol: 'http',
       path: '/',
-    },
+    }),
   ],
 };
 
-console.debug('APM    OK !');
+console.debug('APM          OK!');
 export default apm(apmConfig);
