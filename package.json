@@ -65,6 +65,7 @@
     "@babel/plugin-transform-regenerator": "^7.17.9",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.7",
+    "autocannon": "^7.9.0",
     "babel-jest": "^27.4.5",
     "core-js": "^3.22.3",
     "eslint": "^8.6.0",

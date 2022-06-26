@@ -81,4 +81,47 @@ app.use('/', express.static('doc'));
  */
 app.use('/coverage', express.static('coverage'));
 
-server();
+import { cpus } from "os";
+import cluster from 'cluster';
+
+/* istanbul ignore for,next,else,if */
+if (!cluster.isWorker) {
+} else {
+  process.on('SIGHUP', () => {
+    console.timeEnd(`worker-${process.pid}`);
+    console.debug('exit');
+    process.kill('SIGTERM');
+  });
+}
+
+
+/* istanbul ignore for,next,else,if */
+//if (clusterMode) {
+const numCPUs = cpus().length*2-1 || 0;
+console.time(`worker-${process.pid}`);
+if (!cluster.isWorker) {
+  console.debug(`Primary ${process.pid} is running (${numCPUs})`);
+  server();
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+ cluster.on('exit', (worker /* , code, signal */) => {
+    console.timeEnd(`worker-${process.pid}`);
+    console.debug(`worker ${worker.process.pid} died`);
+  });
+}
+else {
+  console.debug(`Worker ${process.pid} started`);
+  process.on('SIGHUP', () => {
+    console.debug('exit');
+    console.timeEnd(`worker-${process.pid}`);
+    const array = Object.values(cluster.workers);
+    for (let index = 0; index < array.length; index++) {
+      const worker = array[index];
+      worker.process.kill('SIGTERM');
+    }
+  });
+}
