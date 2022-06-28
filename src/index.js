@@ -2,9 +2,15 @@
 // importando dependencias do projeto
 import apm from 'express-status-monitor'; // https://github.com/RafalWilinski/express-status-monitor
 import dotenv from 'dotenv-safe'; // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
-import express from 'express';
+import serverStatic from '@fastify/static'
+import { fileURLToPath } from 'url'
+import { dirname, join} from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 import server, { app } from './server.js';
+
+server();
 
 const config = dotenv.config().parsed;
 
@@ -70,7 +76,12 @@ app.use(apm(apmConfig));
  * @api {get} / Documentação da API
  * @apiDescription Exibe documentação da API
  */
-app.use('/', express.static('doc'));
+//app.use('/', serverStatic('doc'));
+
+//await app.register(serverStatic, {
+//  prefix:'/',
+//  root:join(__dirname,'../')
+//})
 
 /**
  * @apiGroup Services
@@ -79,6 +90,10 @@ app.use('/', express.static('doc'));
  * @api {get} /coverage Cobertura de código da API
  * @apiDescription Exibe cobertura de código da API
  */
-app.use('/coverage', express.static('coverage'));
+//app.use('/coverage',serverStatic('coverage'));
 
-server();
+//const staticIndex = (req,res) => res.sendFile('index.html');
+//
+//app.get('/doc', (req,res) => res.sendFile('doc/index.html'))
+//app.get('/coverage', (req,res) => res.sendFile('coverage/index.html'))
+

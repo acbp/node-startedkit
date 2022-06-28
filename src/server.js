@@ -1,11 +1,13 @@
-import express from 'express'; // gestão de rotas - https://expressjs.com/en/guide/routing.html
-import cors from 'cors'; // cross origin resource share - https://github.com/expressjs/cors
-import helmet from 'helmet'; // segurança - https://helmetjs.github.io/
+import fastify from 'fastify'; 
+import middie from '@fastify/express'; 
+import cors from '@fastify/cors'; // cross origin resource share - https://github.com/expressjs/cors
+import helmet from '@fastify/helmet'; // segurança - https://helmetjs.github.io/
 import dotenv from 'dotenv-safe'; // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
 import logger from './utils/logger.js';
 import routes from './routes/index.js';
 
-export const app = express();
+export const app = fastify()
+await app.register(middie)
 
 /* https://github.com/expressjs/cors#configuration-options */
 const corsOptions = {
@@ -27,17 +29,13 @@ console.debug('config OK !');
 
 logger({ config });
 
-app.use(cors(corsOptions));
+await app.register(cors, corsOptions)
 
 console.debug('cors   OK !');
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self' 'unsafe-inline' 'unsafe-eval' 'nonce-rAnd0m123'", 'localhost', 'https://cdnjs.cloudflare.com'], // permite acesso aos docs
-    },
-  },
-}));
+await app.register(helmet,{
+  contentSecurityPolicy:false
+});
 
 console.debug('helmet OK !');
 
@@ -45,4 +43,4 @@ routes(app, config);
 
 const logRunnig = () => console.debug(`Running at ${HOST}:${PORT}`);
 
-export default () => app.listen(PORT, HOST, logRunnig);
+export default () => app.listen({port:PORT, host:HOST });

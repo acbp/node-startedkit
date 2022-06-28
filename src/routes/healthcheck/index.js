@@ -14,7 +14,18 @@ const healthCheck = (request, response) => {
   console.debug('health-check OK !');
   response.status(200).send('OK');
 };
+const schema = {
+  schema:{
+    response:{
+      200:{
+        type:'object',
+        properties:{
+        }
+      }
+    }
+  }
+}
 export default (app) => {
-  app.get('/healthcheck', healthCheck);
-  app.get('/health-check', healthCheck);
+  app.get('/healthcheck', schema, healthCheck);
+  app.get('/health-check',schema, healthCheck);
 };
