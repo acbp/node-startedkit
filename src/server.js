@@ -7,7 +7,6 @@ const routes = require('./routes/index.js');
 
 const app = express();
 
-
 /* https://github.com/expressjs/cors#configuration-options */
 const corsOptions = {
   origin: '*',
@@ -32,7 +31,7 @@ app.use(cors(corsOptions));
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self' 'unsafe-inline' 'unsafe-eval' 'nonce-rAnd0m123'", 'localhost'], // permite acesso aos docs
+      defaultSrc: ["'self' 'unsafe-inline' ", 'localhost', 'cdnjs.cloudflare.com'], // permite acesso aos docs
     },
   },
 }));
