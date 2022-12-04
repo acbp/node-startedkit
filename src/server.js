@@ -31,7 +31,8 @@ app.use(cors(corsOptions));
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self' 'unsafe-inline' ", 'localhost', 'cdnjs.cloudflare.com'], // permite acesso aos docs
+      // permite acesso aos docs
+      defaultSrc: ["'self' 'unsafe-inline' 'unsafe-eval' ", 'localhost', 'cdnjs.cloudflare.com', 'localhost'],
     },
   },
 }));
