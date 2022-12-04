@@ -1,10 +1,10 @@
 {
   "name": "nodejs-server-log",
-  "version": "0.0.0",
+  "version": "0.0.7",
   "description": "Servidor em NodeJS usando express, helmet e com integração com graylog",
   "main": "src/index.js",
-  "type": "module",
   "private": true,
+  "type": "module",
   "engines": {
     "eslint": ">= 8.6.0",
     "husky": ">=7.0.0",
@@ -31,7 +31,9 @@
     "test": "npm run jest -- --selectProjects=test",
     "watch": "npm run jest -- --watch",
     "doc": "apidoc -i src -o doc",
+    "predev": "npm run doc",
     "prestart": "npm run doc",
+    "preparedebug": "husky install",
     "preparedev": "husky install"
   },
   "keywords": [
@@ -75,6 +77,7 @@
     "jest-runner-prettier": "^0.3.7",
     "prettier": "^2.5.1",
     "regenerator-runtime": "^0.13.9",
+    "socket.io": "4.5",
     "supertest": "^6.1.6"
   },
   "nodemonConfig": {
