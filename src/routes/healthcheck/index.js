@@ -14,7 +14,8 @@ const healthCheck = (request, response) => {
   console.debug('health-check OK !');
   response.status(200).send('OK');
 };
-export default (app) => {
+
+module.exports = (app) => {
   app.get('/healthcheck', healthCheck);
   app.get('/health-check', healthCheck);
 };
