@@ -1,36 +1,26 @@
-const express = require('express');
-const healthCheck = require('./healthcheck/index.js');
-const apm = require('../utils/apm.js');
+const memRoutes = {}
+const error404 = (code) => new Response(undefined,{status:code})
 
-module.exports = (app) => {
-  healthCheck(app);
+async function memoization(route){
+  memRoutes[route] = (
+    memRoutes[route] || 
+    (await import(`./${route}/index.js`))?.default 
+  )
+  return memRoutes[route]()
+}
 
-  /**
-   * @apiGroup Services
-   * @apiName Monitor
-   *
-   * @api {get} /status Monitor
-   * @apiDescription Monitora os recuros do servidor
-   */
-  app.use(apm());
+function process(routes) {
+  const result = {
+    fetch(req,res){
+      const url = (new URL(req.url)).pathname?.trim()
+      console.log('fetch')
+      return memoization(url)
+    },
+    error(error){
+      return error404('404')
+    }
+  }
+  return result
+} 
 
-  /**
-   * @apiGroup Services
-   * @apiName Documentação
-   *
-   * @api {get} / Documentação da API
-   * @apiDescription Exibe documentação da API
-   */
-  app.use('/', express.static('doc'));
-
-  /**
-   * @apiGroup Services
-   * @apiName Cobertura de código
-   *
-   * @api {get} /coverage Cobertura de código da API
-   * @apiDescription Exibe cobertura de código da API
-   */
-  app.use('/coverage', express.static('coverage'));
-
-  console.debug('routes OK !');
-};
+export default process()
