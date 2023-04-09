@@ -1,10 +1,9 @@
 {
   "name": "nodejs-server-log",
-  "version": "0.0.7",
+  "version": "0.0.0",
   "description": "Servidor em NodeJS usando express, helmet e com integração com graylog",
   "main": "src/index.js",
   "private": true,
-  "type": "module",
   "engines": {
     "eslint": ">= 8.6.0",
     "husky": ">=7.0.0",
@@ -78,7 +77,6 @@
     "jest-runner-prettier": "^0.3.7",
     "prettier": "^2.5.1",
     "regenerator-runtime": "^0.13.9",
-    "socket.io": "4.5",
     "supertest": "^6.1.6"
   },
   "nodemonConfig": {

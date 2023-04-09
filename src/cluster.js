@@ -1,120 +1,37 @@
 /* istanbul ignore file */
-// importando dependencias do projeto
-import apm from 'express-status-monitor'; // https://github.com/RafalWilinski/express-status-monitor
-import dotenv from 'dotenv-safe'; // configuração do ambiente - https://www.npmjs.com/package/dotenv-safe
-import express from 'express';
+const cluster = require('cluster');
 
-import server, { app } from './server.js';
-
-const config = dotenv.config().parsed;
-
-// Monitor da aplicação
-const apmConfig = {
-  title: 'Express Status', // Default title
-  path: '/status',
-  spans: [{
-    interval: 1, // Every second
-    retention: 60, // Keep 60 datapoints in memory
-  }, {
-    interval: 5, // Every 5 seconds
-    retention: 60,
-  }, {
-    interval: 15, // Every 15 seconds
-    retention: 60,
-  }],
-  chartVisibility: {
-    cpu: true,
-    mem: true,
-    load: true,
-    eventLoop: true,
-    heap: true,
-    responseTime: true,
-    rps: true,
-    statusCodes: true,
-  },
-  healthChecks: [
-    {
-      protocol: 'http',
-      host: config.HOST,
-      path: '/healthcheck',
-      port: config.PORT,
-    },
-    {
-      protocol: 'http',
-      host: config.HOST,
-      path: '/coverage',
-      port: config.PORT,
-    },
-    {
-      protocol: 'http',
-      host: config.HOST,
-      path: '/',
-      port: config.PORT,
-    },
-  ],
-};
-
-/**
- * @apiGroup Services
- * @apiName Monitor
- *
- * @api {get} /status Monitor
- * @apiDescription Monitora os recuros do servidor
- */
-app.use(apm(apmConfig));
-
-/**
- * @apiGroup Services
- * @apiName Documentação
- *
- * @api {get} / Documentação da API
- * @apiDescription Exibe documentação da API
- */
-app.use('/', express.static('doc'));
-
-/**
- * @apiGroup Services
- * @apiName Cobertura de código
- *
- * @api {get} /coverage Cobertura de código da API
- * @apiDescription Exibe cobertura de código da API
- */
-app.use('/coverage', express.static('coverage'));
-
-import { cpus } from "os";
-import cluster from 'cluster';
-
-/* istanbul ignore for,next,else,if */
-if (!cluster.isWorker) {
-} else {
-  process.on('SIGHUP', () => {
-    console.timeEnd(`worker-${process.pid}`);
-    console.debug('exit');
-    process.kill('SIGTERM');
-  });
-}
-
-
-/* istanbul ignore for,next,else,if */
-//if (clusterMode) {
-const numCPUs = cpus().length*2-1 || 0;
-console.time(`worker-${process.pid}`);
-if (!cluster.isWorker) {
-  console.debug(`Primary ${process.pid} is running (${numCPUs})`);
-  server();
-
-  // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
+module.exports = async ({ config, server }) => {
+  /* istanbul ignore file */
+  if (cluster.isWorker) {
+    process.on('SIGHUP', () => {
+      console.timeEnd(`worker-${process.pid}`);
+      console.debug('exit');
+      process.kill('SIGTERM');
+    });
   }
 
- cluster.on('exit', (worker /* , code, signal */) => {
-    console.timeEnd(`worker-${process.pid}`);
-    console.debug(`worker ${worker.process.pid} died`);
-  });
-}
-else {
+  /* istanbul ignore for,next,else,if */
+  const numCPUs = config?.CPU || 1;
+  console.time(`worker-${process.pid}`);
+  if (!cluster.isWorker) {
+    console.debug(`Primary ${process.pid} is running (${numCPUs})`);
+
+    // Fork workers.
+    for (let i = 0; i < numCPUs; i++) {
+      cluster.fork();
+    }
+
+    cluster.on('exit', (worker /* , code, signal */) => {
+      console.timeEnd(`worker-${process.pid}`);
+      console.debug(`worker ${worker.process.pid} died`);
+    });
+
+    return;
+  }
+
   console.debug(`Worker ${process.pid} started`);
+  server();
   process.on('SIGHUP', () => {
     console.debug('exit');
     console.timeEnd(`worker-${process.pid}`);
@@ -124,4 +41,4 @@ else {
       worker.process.kill('SIGTERM');
     }
   });
-}
+};
